@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "start.bat",
+    "start": "start.sh",
     "test": "echo \"Error: no test specified\"",
     "dev": "startdev.bat"
   },
