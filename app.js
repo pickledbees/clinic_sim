@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 //simulated clinic API constants
-const PORT = 3002;
+const PORT = process.env.PORT || 3002;
 const KIOSK_API_CALLNUMBER = "http://localhost:3001/callNumber";
 const VENUE_ID = "STG-180000001W-83338-SEQRSELFTESTSINGLE-SE";
 const SECRET = "secretABC";
@@ -77,5 +77,5 @@ io.on("connection", (socket) => {
 });
 
 server.listen(PORT, () =>
-  console.log("clinic system simulation listening on port:", PORT)
+  console.log("clinic system simulation listening on port ", PORT)
 );
