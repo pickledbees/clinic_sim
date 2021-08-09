@@ -18,9 +18,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //simulated clinic API constants
 const PORT = process.env.PORT || 3002;
-const KIOSK_API_CALLNUMBER = "https://clinicq.azurewebsites.net/callNumber";
-const VENUE_ID = "STG-180000001W-83338-SEQRSELFTESTSINGLE-SE";
-const SECRET = "secretABC";
+const KIOSK_API_CALLNUMBER = process.env.API_URL_CALLNUMBER;
+const VENUE_ID = process.env.VENUE_ID;
+const SECRET = process.env.SECRET;
 
 //serve clinic management portal
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "index.html")));

@@ -4,9 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "start.bat",
     "test": "echo \"Error: no test specified\"",
-    "dev": "nodemon app.js"
+    "dev": "startdev.bat"
   },
   "author": "",
   "license": "ISC",
