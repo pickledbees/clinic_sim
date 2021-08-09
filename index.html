@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ABC Clinic</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+    body {
+      padding: 20px;
+    }
+
+    button {
+      margin: 8px 10px 8px 0;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 1em;
+      background-color: darkorange;
+      color: white;
+    }
+
+    button:hover {
+      background-color: orangered;
+    }
+
+    button:active {
+      background-color: grey;
+    }
+
+    .card {
+      width: 500px;
+      height: 450px;
+      display: inline-block;
+      padding: 10px;
+      margin: 10px;
+      overflow-y: auto;
+    }
+
+    .called_card {
+      background-color: #fff5f0;
+    }
+  </style>
+</head>
+<body>
+<h1>Clinic Queue Management Portal</h1>
+<h3 id="queue_count"></h3>
+<div id="display"></div>
+</body>
+
+<script>
+  const socket = io();
+  const patients = new Map();
+  socket.on("number called", (data) => {
+    const number = data.number;
+    patients.get(number).called = true;
+    render();
+  });
+
+  socket.on("patient added", (data) => {
+    const patient = data.patient;
+    patients.set(patient.number, patient);
+    render();
+  });
+
+  socket.on("patient deleted", (data) => {
+    const number = data.patient.number;
+    patients.delete(number);
+    render();
+  });
+
+  socket.on("patients", (data) => {
+    console.log(data);
+    for (let patient of data.patients) {
+      patients.set(patient.number, patient);
+    }
+    render();
+  });
+
+  function callNumber(number) {
+    socket.emit("call number", { number });
+    alert("called patient")
+  }
+
+  function deletePatient(number) {
+    const ok = confirm(`Are you sure you want to delete patient with queue number ${number}?`)
+    if (ok) {
+      socket.emit("delete patient", { number })
+    }
+  }
+
+  //renders portal
+  function render() {
+    document.getElementById("queue_count").innerText = `Currently in Queue: ${patients.size}`;
+
+    const display = document.getElementById("display");
+    display.innerHTML = "";
+
+    for (let patient of patients.values()) {
+      display.appendChild(patientCard(patient));
+    }
+  }
+
+  //generates patient card
+  function patientCard(patient) {
+    const { name, number, called, ...rest } = patient;
+    const card = document.createElement("div");
+
+    //render card headers
+    const nameHeader = document.createElement("h2");
+    const numberHeader = document.createElement("h3");
+    nameHeader.innerText = patient.name;
+    numberHeader.innerText = "Q Number: " + patient.number;
+    card.appendChild(nameHeader);
+    card.appendChild(numberHeader);
+
+    //render card buttons
+    const callButton = document.createElement("button");
+    callButton.innerText = "CALL";
+    callButton.addEventListener("click", () => callNumber(patient.number));
+    card.appendChild(callButton);
+    const deleteButton = document.createElement("button");
+    deleteButton.innerText = "DELETE";
+    deleteButton.addEventListener("click", () => deletePatient(patient.number));
+    card.appendChild(deleteButton);
+
+    //render card info
+    card.appendChild(divWithText(`Status: ${called ? "Called" : "Waiting"}`))
+    card.classList.add("card")
+    for (let [key, value] of Object.entries(rest)) {
+      card.appendChild(divWithText(key + ": " + value));
+    }
+
+    if (patient.called) card.classList.add("called_card")
+
+    return card;
+  }
+
+  //creates a div with text
+  function divWithText(text) {
+    const div = document.createElement("div");
+    div.innerText = text;
+    return div;
+  }
+</script>
+
+</html>
