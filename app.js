@@ -10,17 +10,18 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-const PatientsModel = require("./PatientsModel");
-const patientsModel = new PatientsModel(io); //patient model will emit events to sockets when modified
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-
 //simulated clinic API constants
 const PORT = process.env.PORT || 3002;
 const KIOSK_API_CALLNUMBER = process.env.API_URL_CALLNUMBER;
 const VENUE_ID = process.env.VENUE_ID;
 const SECRET = process.env.SECRET;
+const LAST_CALLED_BUFFER_LENGTH = 5;
+
+const PatientsModel = require("./PatientsModel");
+const patientsModel = new PatientsModel(io, LAST_CALLED_BUFFER_LENGTH); //patient model will emit events to sockets when modified
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //serve clinic management portal
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "index.html")));

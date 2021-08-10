@@ -2,16 +2,15 @@
  * Represents a model of the current patients still awaiting their turn
  * broadcasting to subscribed sockets changes to the model
  */
-const LAST_CALLED_BUFFER_LENGTH = 5;
-
 class PatientsModel {
-  constructor(io) {
+  constructor(io, bufferLength) {
     this._nricToPatient = {};
     this._numberToPatient = {};
     this._number = 0;
     this._io = io;
     this._called = new Set();
     this._lastCalled = [];
+    this._bufferLength = bufferLength;
   }
 
   callNumber(number) {
@@ -28,7 +27,7 @@ class PatientsModel {
 
       //adjust last called
       this._lastCalled.unshift({ number, time: Date.now() });
-      if (this._lastCalled.length > 5) this._lastCalled.pop();
+      if (this._lastCalled.length > this._bufferLength) this._lastCalled.pop();
 
       //emit to all clients on model change
       this._io.emit("number called", { number });
