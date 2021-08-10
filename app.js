@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3002;
 const KIOSK_API_CALLNUMBER = process.env.API_URL_CALLNUMBER;
 const VENUE_ID = process.env.VENUE_ID;
 const SECRET = process.env.SECRET;
-const LAST_CALLED_BUFFER_LENGTH = 5;
+const LAST_CALLED_BUFFER_LENGTH = process.env.LAST_CALLED_BUFFER_LENGTH || 5;
 
 const PatientsModel = require("./PatientsModel");
 const patientsModel = new PatientsModel(io, LAST_CALLED_BUFFER_LENGTH); //patient model will emit events to sockets when modified
