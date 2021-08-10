@@ -25,19 +25,26 @@ const SECRET = process.env.SECRET;
 //serve clinic management portal
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "index.html")));
 
-//submission API for other applications to send data to
-app.get("/checkNumber/:number", (req, res) => {
-  res.send({ called: patientsModel.hasCalled(req.params.number) });
+//status check API for other applications to query about patient status
+app.get("/checkStatus/:nric/:number", (req, res) => {
+  const { nric, number } = req.params;
+  if (!nric || number === "" || number === undefined) {
+    return res.status(statusCode.BAD_REQUEST).jsonp({
+      message: "invalid nric or queue number",
+    });
+  }
+
+  const status = patientsModel.getStatus(nric, number);
+  const lastCalled = patientsModel.getLastCalled();
+
+  res.send({ status, lastCalled });
 });
 
-/**
- * NOTE: This is a sim and only validates the input just enough so it will function.
- * Checks for presence of nric only
- */
 //submission API for other applications to send data to
 app.post("/submit", (req, res) => {
+  //simple validation
   if (!req.body.nric) {
-    res
+    return res
       .status(statusCode.BAD_REQUEST)
       .jsonp({ message: "missing nric data from patient" });
   }
@@ -54,16 +61,18 @@ io.on("connection", (socket) => {
   //clinic management portal calls number, alert kiosk application and update model
   socket.on("call number", async (data) => {
     try {
+      patientsModel.callNumber(data.number);
+
       //send HTTP request to server
       let response = await restClient
         .post(KIOSK_API_CALLNUMBER)
-        .send({ number: data.number, venueId: VENUE_ID, secret: SECRET })
+        .send({
+          number: data.number,
+          venueId: VENUE_ID,
+          secret: SECRET,
+          lastCalled: patientsModel.getLastCalled(),
+        })
         .promise();
-
-      //only update model if request was a success
-      if (response.statusCode === statusCode.OK) {
-        patientsModel.callNumber(data.number);
-      }
     } catch (e) {
       //for debug
       console.error(`failed to call number ${data.number}, ${e}`);
