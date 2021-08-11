@@ -17,8 +17,10 @@ const VENUE_ID = process.env.VENUE_ID;
 const SECRET = process.env.SECRET;
 const LAST_CALLED_BUFFER_LENGTH = process.env.LAST_CALLED_BUFFER_LENGTH || 5;
 
+const prepopulate = require("./prepopulate");
 const PatientsModel = require("./PatientsModel");
 const patientsModel = new PatientsModel(io, LAST_CALLED_BUFFER_LENGTH); //patient model will emit events to sockets when modified
+prepopulate(patientsModel);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

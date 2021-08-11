@@ -8,7 +8,9 @@ clinic queue. This simulated clinic server has been given the name "ABC Clinic".
 
 ## Using Simulated Clinic Server
 Access the **demo** instance's portal [here](https://abcclinic.azurewebsites.net/). When patients are registered in the deployed demo ClinicQ application,
-registration details appear as cards on the simulated clinic server portal.
+registration details appear as cards on the simulated clinic server portal. This server comes pre-populated with 5 personas already in queue.
+
+![ui prepopulated](docs/prepopulated.png) 
 
 ## Deployment
 This project comes included with start scripts that set the necessary environment variables for operation, as well as to start the application.
