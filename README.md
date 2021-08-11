@@ -24,11 +24,10 @@ both projects use Github Actions to perform CD to the App Service. The workflow 
 
 ## Local Development Setup
 1. Set up environment variables. See [Environment Variables](#environment-variables).
-2. Set up the clinic's database record in ClinicQ's database. See ClinicQ's database setup documentation [here](https://github.com/pickledbees/clinic_q_management#database-setup).
-3. Install [NodeJS](https://nodejs.org/en/) if not already installed. Any version >10.11.0 should work.
-4. In the root directory, run ```npm install``` to install dependencies
-5. Install [nodemon](https://www.npmjs.com/package/nodemon) globally: ```npm install -g nodemon```
-6. Start the application in development mode: ```npm run dev```
+2. Install [NodeJS](https://nodejs.org/en/) if not already installed. Any version >10.11.0 should work.
+3. In the root directory, run ```npm install``` to install dependencies
+4. Install [nodemon](https://www.npmjs.com/package/nodemon) globally: ```npm install -g nodemon```
+5. Start the application in development mode: ```npm run dev```
 
 The simulated clinic server is then deployed locally listening on port 3002 by default. On successful startup, you should see this:
 ```
@@ -45,7 +44,7 @@ For **deployment**, edit [start.bat](start.bat) or [start.sh](start.sh). For **d
 | Variable                  | Description                                                                                  |
 |---------------------------|----------------------------------------------------------------------------------------------|
 | PORT                      | The port for the server to listen on. Not necessary for deployment in container environments |
-| CLINCQ_API_CALLNUMBER     | The /callNumber API URL of the deployed ClinicQ server                                       |
+| CLINCQ_API_CALLNUMBER     | The /callNumber API URL of the ClinicQ server                                                |
 | VENUE_ID                  | The clinic's assigned SafeEntry venue ID                                                     |
 | SECRET                    | The clinic's secret to call /callNumber                                                      |
 | LAST_CALLED_BUFFER_LENGTH | Maximum size of recently called list                                                         |
