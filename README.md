@@ -43,7 +43,7 @@ For **deployment**, edit [start.bat](start.bat) or [start.sh](start.sh). For **d
 | Variable                  | Description                                                                                  |
 |---------------------------|----------------------------------------------------------------------------------------------|
 | PORT                      | The port for the server to listen on. Not necessary for deployment in container environments |
-| CLINCQ_API_CALLNUMBER     | The /callNumber API URL of the deployed ClinicQ server                                       |
+| CLINCQ_API_CALLNUMBER     | The /callNumber API URL of the ClinicQ server                                                |
 | VENUE_ID                  | The clinic's assigned SafeEntry venue ID                                                     |
 | SECRET                    | The clinic's secret to call /callNumber                                                      |
 | LAST_CALLED_BUFFER_LENGTH | Maximum size of recently called list                                                         |
