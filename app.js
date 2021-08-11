@@ -12,7 +12,7 @@ const io = new Server(server);
 
 //simulated clinic API constants
 const PORT = process.env.PORT || 3002;
-const KIOSK_API_CALLNUMBER = process.env.API_URL_CALLNUMBER;
+const CLINCQ_API_CALLNUMBER = process.env.API_URL_CALLNUMBER;
 const VENUE_ID = process.env.VENUE_ID;
 const SECRET = process.env.SECRET;
 const LAST_CALLED_BUFFER_LENGTH = process.env.LAST_CALLED_BUFFER_LENGTH || 5;
@@ -66,7 +66,7 @@ io.on("connection", (socket) => {
 
       //send HTTP request to server
       let response = await restClient
-        .post(KIOSK_API_CALLNUMBER)
+        .post(CLINCQ_API_CALLNUMBER)
         .send({
           number: data.number,
           venueId: VENUE_ID,
@@ -87,5 +87,5 @@ io.on("connection", (socket) => {
 });
 
 server.listen(PORT, () =>
-  console.log("clinic system simulation listening on port ", PORT)
+  console.log("clinic system simulation listening on port", PORT)
 );
