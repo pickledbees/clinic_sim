@@ -4,7 +4,7 @@
 
 This project contains a simulated clinic server meant to operate with the [ClinicQ](https://github.com/pickledbees/clinic_q_management) application.
 This clinic server is meant to simulate the queue management portal at clinics, allowing the user to call patients, as well as remove (delete) them from the
-clinic queue. This simulated clinic server has been given the name "ABC Clinic".
+clinic queue. It has undergone the ClinicQ onboarding process to expose necessary APIs for ClinicQ. This simulated clinic server has been given the name "ABC Clinic".
 
 ## Using Simulated Clinic Server
 Access the **demo** instance's portal [here](https://abcclinic.azurewebsites.net/). When patients are registered in the deployed demo ClinicQ application,
