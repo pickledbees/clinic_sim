@@ -23,7 +23,7 @@ For **demo** purposes, an instance of ClincQ and the simulated clinic server has
 both projects use Github Actions to perform CD to the App Service. The workflow ```.yml``` files can be found [here](.github/workflows/main_abcclinic.yml).
 
 ## Quickstart
-For the TAP assessment period, this quickstart will work (DB and environment variables are all set up).
+For the TAP assessment period, this quickstart will work for **Windows** (DB and environment variables are all set up).
 
 2. Install [NodeJS](https://nodejs.org/en/) if not already installed. Any version >10.11.0 should work.
 3. In the root directory, run ```npm install``` to install dependencies
@@ -44,6 +44,8 @@ You can now access the local portal at ```http://localhost:3002```.
 3. In the root directory, run ```npm install``` to install dependencies
 4. Install [nodemon](https://www.npmjs.com/package/nodemon) globally: ```npm install -g nodemon```
 5. Start the application in development mode: ```npm run dev```
+
+**NOTE:** ```npm run dev``` runs a ```.bat``` file to set environment variables and run the app using ```nodemon```.
 
 The simulated clinic server is then deployed locally listening on port 3002 by default. On successful startup, you should see this:
 ```
