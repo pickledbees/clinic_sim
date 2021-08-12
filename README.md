@@ -3,7 +3,7 @@
 ![simulated portal server UI](docs/portal_ui.png)
 
 This project contains a simulated clinic server meant to operate with the [ClinicQ](https://github.com/pickledbees/clinic_q_management) application.
-The clinic server and is meant to simulate the queue management portal at clinics, allowing the user to call patients, as well as remove (delete) them from the
+This clinic server is meant to simulate the queue management portal at clinics, allowing the user to call patients, as well as remove (delete) them from the
 clinic queue. This simulated clinic server has been given the name "ABC Clinic".
 
 ## Using Simulated Clinic Server
